@@ -10,9 +10,9 @@ function waitForRabbitUp {
     done
 }
 
-sudo docker-compose up -d
-sleep 10
+sudo docker-compose up -d rabbit1
 waitForRabbitUp "http://localhost:15671/#/"
+sudo docker-compose up -d rabbit2
 waitForRabbitUp "http://localhost:15672/#/"
 
 count=${1:-10}

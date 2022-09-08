@@ -52,6 +52,13 @@ minimal reproducible example for my problems with rabbitmq autorecovery
    ```
    sudo docker-compose stop rabbit2
    ```
+   
+6. You can run steps above in automated way by using the script:
+   ```
+   # usage: ./testingScript.sh <numberOfIterations>
+   ./testingScript.sh 10
+   ```
+
 ## Problem reproduced - autorecovery failed
 
 Output in the consumer stdout:
@@ -159,5 +166,6 @@ Caused by: com.rabbitmq.client.AlreadyClosedException: channel is already closed
 ## Hypothesis to check
 
 * does setting `.erlang.cookie` via `RABBITMQ_ERLANG_COOKIE` env variable instead of `command: ["bash", "-c", "echo erlangCookie > /var/lib/rabbitmq/.erlang.cookie ; chmod 400 /var/lib/rabbitmq/.erlang.cookie; rabbitmq-server"]` has any influence? It seems it leads to higher probability of reproduction.
+  * **YES!** setting cookie via variable seems to be related. Why?  
 * do additional `cluster_formation` options in `rabbitmq.conf` have any effect on the problem?
 * do additional `rabbit03`, `rabbit04` nodes in `rabbitmq.conf` have any effect on the problem?
