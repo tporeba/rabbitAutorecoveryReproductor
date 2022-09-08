@@ -23,7 +23,7 @@ services:
     # environment:
     #  - RABBITMQ_ERLANG_COOKIE=erlangCookie
     healthcheck:
-      test: rabbitmq-diagnostics -q ping
+      test: rabbitmq-diagnostics check_port_connectivity
       interval: 10s
       timeout: 10s
       retries: 3
@@ -50,7 +50,7 @@ services:
     #environment:
     #      - RABBITMQ_ERLANG_COOKIE=erlangCookie
     healthcheck:
-      test: rabbitmq-diagnostics -q ping
+      test: rabbitmq-diagnostics check_port_connectivity
       interval: 10s
       timeout: 10s
       retries: 3

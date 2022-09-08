@@ -19,11 +19,11 @@ services:
     volumes:
       - "./rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf"
     # TODO alternative way of setting .erlang.cookie, as not all versions allow RABBITMQ_ERLANG_COOKIE variable. Does this make any difference for the problem?
-    #command: ["bash", "-c", "echo erlangCookie > /var/lib/rabbitmq/.erlang.cookie ; chmod 400 /var/lib/rabbitmq/.erlang.cookie; rabbitmq-server"]
+    # command: ["bash", "-c", "echo erlangCookie > /var/lib/rabbitmq/.erlang.cookie ; chmod 400 /var/lib/rabbitmq/.erlang.cookie; rabbitmq-server"]
     environment:
       - RABBITMQ_ERLANG_COOKIE=erlangCookie
     healthcheck:
-      test: rabbitmq-diagnostics -q ping
+      test: rabbitmq-diagnostics check_port_connectivity
       interval: 10s
       timeout: 10s
       retries: 3
@@ -46,11 +46,11 @@ services:
     volumes:
       - "./rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf"
     # TODO alternative way of setting .erlang.cookie, as not all versions allow RABBITMQ_ERLANG_COOKIE variable. Does this make any difference for the problem?
-    #command: ["bash", "-c", "echo erlangCookie > /var/lib/rabbitmq/.erlang.cookie ; chmod 400 /var/lib/rabbitmq/.erlang.cookie; rabbitmq-server"]
+    # command: ["bash", "-c", "echo erlangCookie > /var/lib/rabbitmq/.erlang.cookie ; chmod 400 /var/lib/rabbitmq/.erlang.cookie; rabbitmq-server"]
     environment:
       - RABBITMQ_ERLANG_COOKIE=erlangCookie
     healthcheck:
-      test: rabbitmq-diagnostics -q ping
+      test: rabbitmq-diagnostics check_port_connectivity
       interval: 10s
       timeout: 10s
       retries: 3
