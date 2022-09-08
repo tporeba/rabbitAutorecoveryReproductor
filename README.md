@@ -6,6 +6,7 @@ minimal reproducible example for my problems with rabbitmq autorecovery
 * openjdk11
 * docker
 * docker-compose
+* JAVA_HOME set to openjdk11 or java on PATH
 
 ## Usage
 
@@ -25,7 +26,7 @@ minimal reproducible example for my problems with rabbitmq autorecovery
    
 3. Build and run the java application `com.example.rabbitautorecoveryreproductor.RabbitAutorecoveryReproductorMain`
    ```   
-   gradlew installDist
+   gradlew installDist -Dorg.gradle.java.home=<yourJDK11path>
    app/build/install/app/bin/app
    ```
    
