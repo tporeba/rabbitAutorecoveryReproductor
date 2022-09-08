@@ -1,0 +1,59 @@
+version: "3.4"
+services:
+  rabbit1:
+    image: rabbitmq:${RABBIT_IMAGE_TAG}
+    ports:
+      - "127.0.0.1:15671:15672"
+      - "127.0.0.1:5671:5672"
+    expose:
+      - 4369
+      - 5671
+      - 5672
+      - 25672
+    networks:
+      lan:
+        aliases:
+          - sv-rabbit01
+    domainname: example.com
+    hostname: os-rabbit01
+    volumes:
+      - "./rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf"
+    # TODO alternative way of setting .erlang.cookie, as not all versions allow RABBITMQ_ERLANG_COOKIE variable. Does this make any difference for the problem?
+    #command: ["bash", "-c", "echo erlangCookie > /var/lib/rabbitmq/.erlang.cookie ; chmod 400 /var/lib/rabbitmq/.erlang.cookie; rabbitmq-server"]
+    environment:
+      - RABBITMQ_ERLANG_COOKIE=erlangCookie
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 10s
+      timeout: 10s
+      retries: 3
+  rabbit2:
+    image: rabbitmq:${RABBIT_IMAGE_TAG}
+    ports:
+      - "127.0.0.1:15672:15672"
+      - "127.0.0.1:5672:5672"
+    expose:
+      - 4369
+      - 5671
+      - 5672
+      - 25672
+    networks:
+      lan:
+        aliases:
+          - sv-rabbit02
+    domainname: example.com
+    hostname: os-rabbit02
+    volumes:
+      - "./rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf"
+    # TODO alternative way of setting .erlang.cookie, as not all versions allow RABBITMQ_ERLANG_COOKIE variable. Does this make any difference for the problem?
+    #command: ["bash", "-c", "echo erlangCookie > /var/lib/rabbitmq/.erlang.cookie ; chmod 400 /var/lib/rabbitmq/.erlang.cookie; rabbitmq-server"]
+    environment:
+      - RABBITMQ_ERLANG_COOKIE=erlangCookie
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 10s
+      timeout: 10s
+      retries: 3
+networks:
+  lan:
+    driver: bridge
